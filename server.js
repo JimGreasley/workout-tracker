@@ -32,6 +32,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //   });
 
 app.get("/api/workouts", (req, res) => {
+   console.log('get/find /api/workouts');
    db.Workout.find({})
 //     .populate("exercises")
      .then(dbWorkout => {
@@ -42,8 +43,9 @@ app.get("/api/workouts", (req, res) => {
      });
  });
 
-app.post("/api/workouts", (req, res) => {
-   db.Workout.create(req.body)
+app.post("/api/workouts", ({ body }, res) => {
+  console.log('post/create /api/workouts', body);
+   db.Workout.create(body)
     .then(dbWorkout => {
       res.json(dbWorkout);
      })
@@ -52,9 +54,9 @@ app.post("/api/workouts", (req, res) => {
      });
  });
 
-app.put("/api/workouts", ({ body }, res) => {
-  db.Workout.update(body)
-    .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
+app.put("/api/workouts/:id", (req, res) => {
+  console.log('put/update /api/workouts', req.body);
+  db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body }}, { new: true })
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
