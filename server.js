@@ -15,6 +15,12 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+// Routes
+// =============================================================
+require("./routes/html-routes.js")(app);
+//require("./routes/author-api-routes.js")(app);
+//require("./routes/post-api-routes.js")(app);
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { useNewUrlParser: true });
 
 // db.User.create({ name: "Ernest Hemingway" })
@@ -25,36 +31,37 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //     console.log(message);
 //   });
 
-// app.get("/notes", (req, res) => {
-//   db.Note.find({})
-//     .then(dbNote => {
-//       res.json(dbNote);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+app.get("/api/workouts", (req, res) => {
+   db.Workout.find({})
+//     .populate("exercises")
+     .then(dbWorkout => {
+       res.json(dbWorkout);
+     })
+     .catch(err => {
+       res.json(err);
+     });
+ });
 
-// app.get("/user", (req, res) => {
-//   db.User.find({})
-//     .then(dbUser => {
-//       res.json(dbUser);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+app.post("/api/workouts", (req, res) => {
+   db.Workout.create(req.body)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+     })
+     .catch(err => {
+       res.json(err);
+     });
+ });
 
-// app.post("/submit", ({ body }, res) => {
-//   db.Note.create(body)
-//     .then(({ _id }) => db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
-//     .then(dbUser => {
-//       res.json(dbUser);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+app.put("/api/workouts", ({ body }, res) => {
+  db.Workout.update(body)
+    .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 // app.get("/populateduser", (req, res) => {
 //   // TODO
