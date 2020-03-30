@@ -13,11 +13,23 @@ The user is able to:
   * View the combined weight of multiple exercises on the dashboard (`stats`) page.
 
 
+## Business Context
+
+A consumer will reach their fitness goals quicker when they track their workout progress.
+
+
 ## Technology Used
 
 This application uses a Mongo database with a Mongoose schema and employs Express to handle routes.
 
 
-## Business Context
+## Heroku link:
 
-A consumer will reach their fitness goals quicker when they track their workout progress.
+https://sheltered-reef-42732.herokuapp.com
+
+
+## GitHub
+
+https://github.com/JimGreasley/workout-tracker
+
+https://jimgreasley.github.io/workout-tracker/
