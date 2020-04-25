@@ -36,14 +36,15 @@ function tallyExercises(exercises) {
 }
 
 function formatDate(date) {
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  };
-
-  return new Date(date).toLocaleDateString(options);
+  // const options = {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric"
+  // };
+  //return new Date(date).toLocaleDateString(options);
+  
+  return new Date(date).toLocaleDateString();
 }
 
 function renderWorkoutSummary(summary) {
